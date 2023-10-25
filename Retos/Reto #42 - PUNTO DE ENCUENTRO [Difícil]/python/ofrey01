@@ -1,0 +1,42 @@
+import matplotlib.pyplot as plt
+
+def punto_encuentro(ini1, vel1, ini2, vel2):
+    dist_ant= ((abs(ini1[0]-ini2[0]))**2 + (abs(ini1[1]-ini2[1]))**2)**0.5
+    time=0
+    hist1_x = []
+    hist1_y = []
+    hist2_x = []
+    hist2_y = []
+    while True:
+        pos1=(ini1[0]+vel1[0]*time , ini1[1]+vel1[1]*time)
+        pos2=(ini2[0]+vel2[0]*time , ini2[1]+vel2[1]*time)
+        dist_nueva= ((abs(pos1[0]-pos2[0]))**2 + (abs(pos1[1]-pos2[1]))**2)**0.5
+        hist1_x.append(pos1[0])
+        hist1_y.append(pos1[1])
+        hist2_x.append(pos2[0])
+        hist2_y.append(pos2[1])
+        if pos1==pos2:
+            print(f"Los elementos se encontraron en {pos1} en {time} unidades de tiempo")
+        
+            fig, ax = plt.subplots()
+            ax.set(xlabel="Eje X", ylabel="Eje Y", title=f"Encuentro de elementos en ({pos1[0]}, {pos1[1]})")
+            ax.grid()
+            ax.plot(hist1_x, hist1_y, color="blue", marker="<", label="Objeto 1")
+            ax.plot(hist2_x, hist2_y, color="green", marker=">", label="Objeto 2")
+            plt.show()
+
+            break
+        elif dist_nueva > dist_ant:
+            print("Los elementos no se van a encontrar")
+            break
+        time += 1
+        dist_ant=dist_nueva
+
+
+
+posicion1 = (2,2)
+velocidad1 = (1,1)
+posicion2 = (12,1)
+velocidad2 = (-1,1.2)
+
+punto_encuentro(posicion1 , velocidad1 , posicion2 , velocidad2)
